@@ -58,43 +58,13 @@ if ($currentPath -notlike "*$binPath*") {
     Write-Host "  Added to PATH" -ForegroundColor Green
 }
 
-# Configure MCP client automatically
-Write-Host ""
-$mcpConfigDir = Join-Path $HOME ".copilot"
-$mcpConfigFile = Join-Path $mcpConfigDir "mcp-config.json"
-$mcpExe = "$InstallDir\Scripts\m365-mcp.exe"
-$escapedPath = $mcpExe -replace '\\', '\\'
-
-if (Test-Path $mcpConfigFile) {
-    $config = Get-Content $mcpConfigFile -Raw | ConvertFrom-Json
-} else {
-    New-Item -ItemType Directory -Force -Path $mcpConfigDir | Out-Null
-    $config = [PSCustomObject]@{}
-}
-
-if (-not $config.mcpServers) {
-    $config | Add-Member -NotePropertyName "mcpServers" -NotePropertyValue ([PSCustomObject]@{})
-}
-
-$m365Entry = [PSCustomObject]@{
-    type = "stdio"
-    command = $mcpExe
-    args = @()
-}
-if ($config.mcpServers.m365) {
-    $config.mcpServers.m365 = $m365Entry
-} else {
-    $config.mcpServers | Add-Member -NotePropertyName "m365" -NotePropertyValue $m365Entry
-}
-
-$config | ConvertTo-Json -Depth 10 | Set-Content $mcpConfigFile -Encoding UTF8
-Write-Host "  Updated $mcpConfigFile" -ForegroundColor Green
-
+# Show next steps
 Write-Host ""
 Write-Host "=== Installation complete ===" -ForegroundColor Green
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Cyan
 Write-Host "  1. az login                         # Login to Azure"
 Write-Host "  2. m365-mcp deploy                   # Deploy Azure resources"
-Write-Host "  3. Restart Copilot CLI               # Pick up the new config"
+Write-Host "  3. m365-mcp config copilot            # Register with Copilot CLI"
+Write-Host "  4. Restart Copilot CLI               # Pick up the new config"
 Write-Host ""

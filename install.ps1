@@ -43,7 +43,7 @@ if (Test-Path $InstallDir) {
 }
 
 & $python.Source -m venv $InstallDir
-& "$InstallDir\Scripts\pip" install --quiet --upgrade pip
+& "$InstallDir\Scripts\python.exe" -m pip install --quiet --upgrade pip
 & "$InstallDir\Scripts\pip" install --quiet $WhlUrl
 
 # Verify

@@ -12,7 +12,12 @@ class M365Mcp < Formula
   def install
     python = Formula["python@3.11"].opt_bin/"python3.11"
     system python, "-m", "venv", libexec
-    system libexec/"bin/pip", "install", "--quiet", cached_download
+
+    # Homebrew renames cached downloads with a hash prefix — restore the original name
+    whl = buildpath/"m365_copilot_skill-#{version}-py3-none-any.whl"
+    cp cached_download, whl
+
+    system libexec/"bin/pip", "install", "--quiet", whl
     bin.install_symlink Dir[libexec/"bin/m365-mcp"]
   end
 

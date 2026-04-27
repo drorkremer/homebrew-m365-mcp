@@ -21,12 +21,20 @@ Write-Host "  Azure CLI: ready" -ForegroundColor Green
 
 # Download and extract
 Write-Host ""
+# Clean old install (kill any running processes first)
+if (Test-Path $InstallDir) {
+    Write-Host "Stopping old m365-mcp processes..." -ForegroundColor Yellow
+    Get-Process | Where-Object { $_.Path -like "*m365-mcp*" } | Stop-Process -Force -ErrorAction SilentlyContinue
+    Start-Sleep -Seconds 1
+    Remove-Item -Recurse -Force $InstallDir
+}
+
+# Download and extract
+Write-Host ""
 Write-Host "Downloading m365-mcp v${Version}..." -ForegroundColor Cyan
 $zipPath = "$env:TEMP\m365-mcp-windows-x64.zip"
 Invoke-WebRequest -Uri $ZipUrl -OutFile $zipPath -UseBasicParsing
 
-# Clean old install, extract new
-if (Test-Path $InstallDir) { Remove-Item -Recurse -Force $InstallDir }
 New-Item -ItemType Directory -Force -Path $InstallDir | Out-Null
 Expand-Archive -Path $zipPath -DestinationPath $InstallDir -Force
 Remove-Item $zipPath

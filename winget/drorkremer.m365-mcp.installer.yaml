@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.6.0.schema.json
+
+PackageIdentifier: drorkremer.m365-mcp
+PackageVersion: 1.0.0
+InstallerType: portable
+Commands:
+  - m365-mcp
+Dependencies:
+  PackageDependencies:
+    - PackageIdentifier: Microsoft.AzureCLI
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/drorkremer/homebrew-m365-mcp/releases/download/v1.0.0/m365-mcp.exe
+    InstallerSha256: 3796E9EEDC6D9658B1EFBA4374A51CAC9AD6D268F6E24A1BBB63E8BB7A7BD7E0
+ManifestType: installer
+ManifestVersion: 1.6.0

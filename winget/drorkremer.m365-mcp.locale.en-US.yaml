@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.6.0.schema.json
+
+PackageIdentifier: drorkremer.m365-mcp
+PackageVersion: 1.0.0
+PackageLocale: en-US
+Publisher: Dror Kremer
+PackageName: m365-mcp
+License: MIT
+ShortDescription: MCP server for Microsoft 365 via Azure Logic App proxies
+Description: >-
+  MCP server providing 50+ tools for Microsoft 365 services including
+  Email, Calendar, Teams, OneDrive, SharePoint, Contacts, To-Do, and Planner.
+  Works with GitHub Copilot CLI, Claude Code, Cursor, and VS Code.
+  Requires Azure Logic App proxies (deployed via 'm365-mcp deploy').
+Tags:
+  - mcp
+  - microsoft-365
+  - copilot
+  - teams
+  - outlook
+  - graph-api
+PackageUrl: https://github.com/drorkremer/homebrew-m365-mcp
+ManifestType: defaultLocale
+ManifestVersion: 1.6.0

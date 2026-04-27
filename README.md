@@ -10,10 +10,17 @@ brew tap drorkremer/m365-mcp
 brew install m365-mcp
 ```
 
-**Windows (PowerShell — one-liner):**
+**Windows (winget):**
 ```powershell
-irm https://raw.githubusercontent.com/drorkremer/homebrew-m365-mcp/main/install.ps1 | iex
+winget install drorkremer.m365-mcp
 ```
+> Note: To use winget with this package, first add this repo as a source:
+> `winget source add --name m365-mcp https://github.com/drorkremer/homebrew-m365-mcp`
+> 
+> Alternatively, install directly:
+> ```powershell
+> irm https://raw.githubusercontent.com/drorkremer/homebrew-m365-mcp/main/install.ps1 | iex
+> ```
 
 ## First-time setup
 

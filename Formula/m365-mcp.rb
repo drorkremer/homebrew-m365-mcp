@@ -2,7 +2,7 @@ class M365Mcp < Formula
   desc "MCP server for Microsoft 365 via Azure Logic App proxies"
   homepage "https://github.com/drorkremer/homebrew-m365-mcp"
   url "https://github.com/drorkremer/homebrew-m365-mcp/releases/download/v1.0.0/m365_copilot_skill-1.0.0-py3-none-any.whl"
-  sha256 "1eedcf3e3da3426a8fb670bb4f5b63d8b5a14ed07ccd29484e22a1519b847ca0"
+  sha256 "cca776f0af0f19b17d6aba7936405d5abef91e4720d192b82edc4ccf9163836c"
   license "MIT"
   version "1.0.0"
 

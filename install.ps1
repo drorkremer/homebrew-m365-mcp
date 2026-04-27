@@ -4,7 +4,7 @@
 $ErrorActionPreference = "Stop"
 
 $Version = "1.0.0"
-$ExeUrl = "https://github.com/drorkremer/homebrew-m365-mcp/releases/download/v${Version}/m365-mcp.exe"
+$ZipUrl = "https://github.com/drorkremer/homebrew-m365-mcp/releases/download/v${Version}/m365-mcp-windows-x64.zip"
 $InstallDir = "$env:LOCALAPPDATA\m365-mcp"
 
 Write-Host "=== m365-mcp installer (v${Version}) ===" -ForegroundColor Cyan
@@ -19,13 +19,18 @@ if (-not $az) {
 }
 Write-Host "  Azure CLI: ready" -ForegroundColor Green
 
-# Download m365-mcp.exe
+# Download and extract
 Write-Host ""
 Write-Host "Downloading m365-mcp v${Version}..." -ForegroundColor Cyan
+$zipPath = "$env:TEMP\m365-mcp-windows-x64.zip"
+Invoke-WebRequest -Uri $ZipUrl -OutFile $zipPath -UseBasicParsing
+
+# Clean old install, extract new
+if (Test-Path $InstallDir) { Remove-Item -Recurse -Force $InstallDir }
 New-Item -ItemType Directory -Force -Path $InstallDir | Out-Null
-$exePath = "$InstallDir\m365-mcp.exe"
-Invoke-WebRequest -Uri $ExeUrl -OutFile $exePath -UseBasicParsing
-Write-Host "  Saved to $exePath" -ForegroundColor Green
+Expand-Archive -Path $zipPath -DestinationPath $InstallDir -Force
+Remove-Item $zipPath
+Write-Host "  Installed to $InstallDir" -ForegroundColor Green
 
 # Add to PATH
 $currentPath = [System.Environment]::GetEnvironmentVariable("PATH", "User")
@@ -36,14 +41,14 @@ if ($currentPath -notlike "*$InstallDir*") {
 }
 
 # Verify
-& $exePath --version
+& "$InstallDir\m365-mcp.exe" --version
 
 Write-Host ""
 Write-Host "=== Installation complete ===" -ForegroundColor Green
 Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Cyan
-Write-Host "  1. Restart your terminal      # Pick up PATH changes"
-Write-Host "  2. az login                    # Login to Azure"
-Write-Host "  3. m365-mcp deploy             # Deploy Azure resources"
-Write-Host "  4. m365-mcp config copilot     # Configure MCP client"
+Write-Host "  1. Restart your terminal       # Pick up PATH changes"
+Write-Host "  2. az login                     # Login to Azure"
+Write-Host "  3. m365-mcp deploy              # Deploy Azure resources"
+Write-Host "  4. m365-mcp config copilot      # Configure MCP client"
 Write-Host ""
